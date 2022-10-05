@@ -15,7 +15,10 @@ public class ExpressionEvaluationTest {
       Arguments.of("6 / 2", 3.0),
       Arguments.of("11 + 23", 34.0),
       Arguments.of("11.1 + 23", 34.1),
-      Arguments.of("1 + 1 * 3", 4.0)
+      Arguments.of("1 + 1 * 3", 4.0),
+      Arguments.of("(11.5 + 15.4) + 10.1", 37.0),
+      Arguments.of("23 - (29.3 - 12.5)", 6.2),
+      Arguments.of("10 - (2 + 3 * (7 - 5))", 2)
     );
   }
 

@@ -9,4 +9,10 @@ public class NumberUtils {
       return false;
     }
   }
+
+  public static double round(String value, int place) {
+    String format = "%." + place + "f";
+    String v = String.format(format, Double.parseDouble(value));
+    return Double.parseDouble(v);
+  }
 }

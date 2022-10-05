@@ -19,7 +19,7 @@ public class ExpressionEvaluation {
       }
     }
 
-    return Double.parseDouble(output.pop());
+    return NumberUtils.round(output.pop(), 2);
   }
 
   private static List<String> convertToPostFix(String expression) {
@@ -39,8 +39,17 @@ public class ExpressionEvaluation {
       if (NumberUtils.isNumeric(token) == true) {
         outputStack.push(token);
       }
+      else if (token.equals("(") == true) {
+        operatorsStack.push(token);
+      }
+      else if (token.equals(")") == true) {
+        while (operatorsStack.peek().equals("(") == false) {
+          outputStack.push(operatorsStack.pop());
+        }
+        operatorsStack.pop();
+      }
       else if (precedences.containsKey(token) == true) {
-        while (operatorsStack.isEmpty() == false && precedences.get(token) <= precedences.get(operatorsStack.peek())) {
+        while (operatorsStack.isEmpty() == false && operatorsStack.peek().equals("(") == false && operatorsStack.peek().equals(")") == false && precedences.get(token) <= precedences.get(operatorsStack.peek())) {
           outputStack.push(operatorsStack.pop());
         }
         operatorsStack.push(token);
@@ -68,9 +77,11 @@ public class ExpressionEvaluation {
         sb.append(c);
       }
       else {
-        tokens.add(sb.toString());
+        if (sb.isEmpty() == false) {
+          tokens.add(sb.toString());
+          sb = new StringBuilder();
+        }
         tokens.add(String.valueOf(c));
-        sb = new StringBuilder();
       }
     }
 
